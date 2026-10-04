@@ -60,6 +60,7 @@ def index():
     return {"status": "ok"}
 
 
+@app.get("/search")
 @app.get("/search/")
 def search(lat: float, long: float, cat: str, rad: float):
     res = find_closest(lat, long, cat, rad)
