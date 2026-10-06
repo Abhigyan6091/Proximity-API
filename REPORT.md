@@ -14,7 +14,7 @@ A critical requirement of the task is the handling of two distinct distance metr
 1. **Search Radius Constraint (Euclidean Distance):** A location is eligible for recommendation if and only if its straight-line spatial distance to the query point is within `rad`.
 2. **Proximity Ranking (Grid/Manhattan Distance):** Among all eligible locations matching the requested category, the final top 10 recommendations must be ordered based on actual grid traversal distance rather than straight-line distance.
 
-The API exposes a `GET /search/` route expecting query parameters `lat`, `long`, `cat`, and `rad`, returning a JSON payload containing the ordered list of the 10 closest location IDs.
+The API exposes a `GET /search/` route accepting query parameters `lat`, `long`, `cat`, `rad`, and `link`, returning a JSON payload containing the ordered list of the 10 closest location IDs.
 
 ---
 
@@ -32,7 +32,7 @@ Before designing the search algorithm, we thoroughly analyzed the structure and 
   where $\text{row} = \lfloor(\text{ID} - 1) / 100\rfloor$ and $\text{col} = (\text{ID} - 1) \pmod{100}$.
 
 ### Network Modeling Considerations
-The problem description notes that direct road links may be missing, similar to real-world street networks. However, because no external edge/adjacency file was supplied with the dataset, the underlying road network must be modeled on the available lattice. Based on clarifications regarding 4-directional motion on the 100x100 grid, movement is restricted to horizontal and vertical steps along grid lines.
+The problem description notes that direct road links may be missing, similar to real-world street networks. While the latest API specification includes the `link` parameter among the accepted query fields, the road/link/network information itself is not provided to students. Therefore, the implementation does not reconstruct a hidden road network from the `link` parameter, but instead operates on the verified lattice. Based on clarifications regarding 4-directional motion on the 100x100 grid, movement is modeled as horizontal and vertical steps along grid lines.
 
 ---
 
@@ -115,10 +115,11 @@ We performed extensive automated validation covering edge scenarios:
   - `long` (float): Query Longitude
   - `cat` (string): Location Category (`bank`, `store`, `pharmacy`, `hospital`, `school`, `restaurant`, `park`, `cafe`)
   - `rad` (float): Circular search radius
+  - `link` (string, optional): Link field as per API specification
 
 ### Example Request
 ```http
-GET /search/?lat=0.505051&long=0.505051&cat=cafe&rad=0.1 HTTP/1.1
+GET /search/?lat=0.505051&long=0.505051&cat=cafe&rad=0.1&link=none HTTP/1.1
 Host: 10.1.75.79:4239
 ```
 

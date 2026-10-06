@@ -62,7 +62,7 @@ def index():
 
 @app.get("/search")
 @app.get("/search/")
-def search(lat: float, long: float, cat: str, rad: float):
+def search(lat: float, long: float, cat: str, rad: float, link: str = ""):
     res = find_closest(lat, long, cat, rad)
     if res is None:
         raise HTTPException(status_code=400, detail="Query point is not on the grid")

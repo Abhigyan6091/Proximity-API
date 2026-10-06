@@ -10,6 +10,7 @@ FastAPI service that finds the 10 closest locations matching a requested categor
   - `long` (float): Query Longitude
   - `cat` (string): Category name (e.g. `bank`, `cafe`, `hospital`, etc.)
   - `rad` (float): Circular search radius
+  - `link` (string, optional): Link field as per API specification
 - **Response Format:**
   ```json
   {
