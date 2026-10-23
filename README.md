@@ -38,3 +38,19 @@ http://10.1.75.79:4239/search/?lat=0.505051&long=0.505051&cat=cafe&rad=0.1
    ```bash
    curl "http://localhost:8000/search/?lat=0.0&long=0.0&cat=hospital&rad=0.3"
    ```
+
+## Running with Docker (One-Command Startup)
+
+1. Build and start the containerized service:
+   ```bash
+   docker compose up --build
+   ```
+2. Query the containerized endpoint:
+   ```bash
+   curl "http://localhost:8000/search/?lat=0.505051&long=0.505051&cat=cafe&rad=0.1&link=none"
+   ```
+3. Stop the service cleanly:
+   ```bash
+   docker compose down
+   ```
+
