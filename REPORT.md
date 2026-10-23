@@ -144,4 +144,44 @@ Host: 10.1.75.79:4239
 - **Alternate Route:** `http://10.1.75.79:4239/search/`
 - **Health Check Probe:** `http://10.1.75.79:4239/health`
 - **GitHub Repository:** `https://github.com/Abhigyan6091/Proximity-API`
+- **Formal Evaluation Report:** `Dockerization_Report_Final.pdf`
+
+---
+
+## 7. Operational Evidence & Terminal Verification Screenshots
+
+All verification commands have been executed directly on the live container environment (`10.1.75.79:2239` with port forwarding `4239 -> 4000`). The screenshots below provide concrete proof of successful implementation, execution, and networking:
+
+### 7.1 Container Project Structure and Docker Configurations
+Directory listing confirming the presence and permissions of `.dockerignore`, `Dockerfile`, `docker-compose.yml`, `app.py`, `locations.csv`, and documentation:
+
+![Project Files and Docker Configurations](screenshots/screenshot_1_files.png)
+
+---
+
+### 7.2 Active Process Execution and Port 4000 Socket Listening
+Verification showing the active Uvicorn ASGI server daemon running under Python 3 and listening on socket `0.0.0.0:4000`:
+
+![Active Process and Port 4000 Listening](screenshots/screenshot_2_process.png)
+
+---
+
+### 7.3 Live HTTP Search Query Response via External Port 4239
+Live HTTP request to `http://10.1.75.79:4239/search` returning `HTTP/1.1 200 OK` and the exact JSON payload containing 10 ordered location IDs:
+
+![Live HTTP Search Query via Port 4239](screenshots/screenshot_3_curl_search.png)
+
+---
+
+### 7.4 Health Check Probe and Trailing Slash Compatibility
+Verification confirming that the `/health` endpoint responds with `{"status": "ok"}` and the `/search/` route with a trailing slash functions properly without redirection overhead:
+
+![Health Check and Trailing Slash Verification](screenshots/screenshot_4_health_and_slash.png)
+
+---
+
+### 7.5 Live Uvicorn Container Access Logs
+Real-time container runtime logs showing Uvicorn starting on port `4000` and processing HTTP GET requests with `200 OK` status codes:
+
+![Live Container Logs on Port 4000](screenshots/screenshot_5_logs.png)
 

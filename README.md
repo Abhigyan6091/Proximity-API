@@ -35,11 +35,11 @@ http://10.1.75.79:4239/search?lat=0.505051&long=0.505051&cat=cafe&rad=0.1&link=n
    ```
 2. Start the server:
    ```bash
-   uvicorn app:app --host 0.0.0.0 --port 8000
+   uvicorn app:app --host 0.0.0.0 --port 4000
    ```
 3. Query the endpoint:
    ```bash
-   curl "http://localhost:8000/search/?lat=0.0&long=0.0&cat=hospital&rad=0.3"
+   curl "http://localhost:4000/search/?lat=0.0&long=0.0&cat=hospital&rad=0.3"
    ```
 
 ## Running with Docker (One-Command Startup)
@@ -48,12 +48,22 @@ http://10.1.75.79:4239/search?lat=0.505051&long=0.505051&cat=cafe&rad=0.1&link=n
    ```bash
    docker compose up --build
    ```
-2. Query the containerized endpoint:
+2. Query the containerized endpoint (Host Port 4239 -> Container Port 4000):
    ```bash
-   curl "http://localhost:8000/search/?lat=0.505051&long=0.505051&cat=cafe&rad=0.1&link=none"
+   curl "http://localhost:4239/search?lat=0.505051&long=0.505051&cat=cafe&rad=0.1&link=none"
+   ```
+   Or query the live deployed container:
+   ```bash
+   curl "http://10.1.75.79:4239/search?lat=0.505051&long=0.505051&cat=cafe&rad=0.1&link=none"
    ```
 3. Stop the service cleanly:
    ```bash
    docker compose down
    ```
+
+## Evaluation Documentation & Evidence
+
+- **PDF Evaluation Report:** [`Dockerization_Report_Final.pdf`](Dockerization_Report_Final.pdf)
+- **Comprehensive Markdown Report:** [`REPORT.md`](REPORT.md)
+- **Terminal Verification Screenshots:** [`screenshots/`](screenshots/)
 
