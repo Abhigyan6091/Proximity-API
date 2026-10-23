@@ -18,11 +18,14 @@ FastAPI service that finds the 10 closest locations matching a requested categor
   }
   ```
 
-## Live Deployment Link
+## Live Container Deployment Link
 
+The service is deployed and running inside the dedicated student container:
 ```text
-http://10.1.75.79:4239/search/?lat=0.505051&long=0.505051&cat=cafe&rad=0.1
+http://10.1.75.79:4239/search?lat=0.505051&long=0.505051&cat=cafe&rad=0.1&link=none
 ```
+*Note: Both `/search` and `/search/` routes are supported without redirection.*
+
 
 ## Running Locally
 

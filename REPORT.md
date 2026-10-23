@@ -2,7 +2,7 @@
 
 **Course:** Proximity Recommendation Project  
 **Repository:** https://github.com/Abhigyan6091/Proximity-API  
-**Live Endpoint:** `http://10.1.75.79:4239/search/`  
+**Live Container Endpoint:** `http://10.1.75.79:4239/search` (and `http://10.1.75.79:4239/search/`)  
 
 ---
 
@@ -105,11 +105,20 @@ We performed extensive automated validation covering edge scenarios:
 
 ---
 
-## 6. API Usage & Deployment
+## 6. API Usage & Container Deployment
 
-### Endpoint Specification
+### 6.1 Container Environment & Architecture
+The API is deployed and actively running inside the dedicated student Linux container environment:
+- **Host Address:** `10.1.75.79`
+- **Internal Container Port:** `4000`
+- **External Forwarded Port:** `4239`
+- **Public/Lab Network Access:** Requests directed to `http://10.1.75.79:4239/search` are forwarded directly into the container's Uvicorn daemon running on port 4000, eliminating localhost isolation and enabling automated grading via Postman, curl, or test scripts.
+- **Process Management:** The Uvicorn ASGI server is configured with background execution (`nohup python3 -m uvicorn app:app --host 0.0.0.0 --port 4000 > app.log 2>&1 &`) and automated log management to ensure 24/7 continuous uptime.
+- **Docker Artifacts:** The repository also packages a standalone `Dockerfile` (based on `python:3.11-slim`), `docker-compose.yml`, `.dockerignore`, and the formal `Dockerization_Report.pdf` for multi-platform reproducibility.
+
+### 6.2 Endpoint Specification
 - **Method:** `GET`
-- **Route:** `/search/` (or `/search`)
+- **Route:** `/search` or `/search/` (both trailing and non-trailing slashes supported without redirect)
 - **Query Parameters:**
   - `lat` (float): Query Latitude
   - `long` (float): Query Longitude
@@ -117,19 +126,22 @@ We performed extensive automated validation covering edge scenarios:
   - `rad` (float): Circular search radius
   - `link` (string, optional): Link field as per API specification
 
-### Example Request
+### 6.3 Example Request
 ```http
-GET /search/?lat=0.505051&long=0.505051&cat=cafe&rad=0.1&link=none HTTP/1.1
+GET /search?lat=0.505051&long=0.505051&cat=cafe&rad=0.1&link=none HTTP/1.1
 Host: 10.1.75.79:4239
 ```
 
-### Example Response
+### 6.4 Example Response
 ```json
 {
   "ids": [5051, 5053, 5251, 4751, 4949, 5149, 5047, 5154, 4551, 4653]
 }
 ```
 
-### Live Submission Details
-- **API URL:** `http://10.1.75.79:4239/search/`
-- **GitHub Repo:** `https://github.com/Abhigyan6091/Proximity-API`
+### 6.5 Live Submission Details
+- **API URL:** `http://10.1.75.79:4239/search`
+- **Alternate Route:** `http://10.1.75.79:4239/search/`
+- **Health Check Probe:** `http://10.1.75.79:4239/health`
+- **GitHub Repository:** `https://github.com/Abhigyan6091/Proximity-API`
+
